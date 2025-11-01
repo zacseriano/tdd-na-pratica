@@ -19,15 +19,10 @@
     </script>
 
     <script>
-      // Isso é o que um pequeno teste unitário parece:
-      test('Esse teste de exemplo deve passar sempre', (assert) => {
-        const resultado = 1 + 1
-        assert.equal(resultado, 2) // apenas para sabermos se tudo está funcionando bem
-      })
-      // Um teste falhando estará colorido como vermelho:
-      test('Esse é como um teste falhando parece', (assert) => {
-        const resultado = [1,2,3].indexOf(1)  // O valor de 'resultado' será 0 (zero)
-        assert.equal(resultado, -1) // Nós esperamos que essa validação falhe
+      test('calcularTroco(1,1) deve retornar [] - Um array vazio', (assert) => {
+        const trocoCalculado = calcularTroco(1, 1) // Sem troco, apenas um array vazio
+        const trocoEsperado = []
+        assert.deepEqual(trocoCalculado, trocoEsperado) // 'deepEqual' usado para comparar arrays, veja mais em https://api.qunitjs.com/assert/deepEqual/
       })
     </script>
 
