@@ -32,5 +32,13 @@
       })
     </script>
 
+    <script>
+      test('calcularTroco(215, 300) deve retornar [50, 20, 10, 5]', (assert) => {
+        const trocoCalculado = calcularTroco(215, 300) // Esperado um array contendo [50, 20, 10, 5]
+        const trocoEsperado = [50, 20, 10, 5]
+        assert.deepEqual(trocoCalculado, trocoEsperado)
+      })
+    </script>
+
   </body>
 </html>
