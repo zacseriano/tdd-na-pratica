@@ -16,27 +16,18 @@
 
     <script>
       function calcularTroco(precoDoProduto, valorPago) {
-        let troco = []        
-        const diferenca = valorPago - precoDoProduto;
-        let cedulaTroco = 0
-        let restante = diferenca;
-        while (restante > 0){
-          cedulaTroco = percorrerCedulasDisponiveis(restante);          
-          restante -= cedulaTroco;
-          troco.push(cedulaTroco);
-        }
-        return troco;
-      }
+        const cedulas = [100, 50, 20, 10, 5, 2, 1];
+        let troco = [];
+        let restante = valorPago - precoDoProduto;
 
-      function percorrerCedulasDisponiveis(diferenca){
-        const trocoEsperado = [100, 50, 20, 10, 5, 2, 1]
-        for (let i = 0; i < trocoEsperado.length; i++) {
-          if(diferenca >= trocoEsperado[i]){
-            return trocoEsperado[i];
+        for (let cedula of cedulas) {
+          while (restante >= cedula) {
+            restante -= cedula;
+            troco.push(cedula);
           }
         }
 
-        return 0;
+        return troco;
       }
     </script>
 
