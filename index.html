@@ -64,5 +64,13 @@
       })
     </script>
 
+    <script>
+      test('calcularTroco(12, 200) deve retornar [100, 50, 20, 10, 5, 2, 1]', (assert) => {
+        const trocoCalculado = calcularTroco(12, 200)
+        const trocoEsperado = [100, 50, 20, 10, 5, 2, 1]
+        assert.deepEqual(trocoCalculado, trocoEsperado)
+      })
+    </script>
+
   </body>
 </html>
