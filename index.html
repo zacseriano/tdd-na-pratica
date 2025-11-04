@@ -17,25 +17,35 @@
     <script>
       function calcularTroco(precoDoProduto, valorPago, estoque) {
         const cedulas = [100, 50, 20, 10, 5, 2, 1];
-        let troco = [];
+        let trocoProvisorio = [];
+        let cedulasUsadas = {};
         let restante = valorPago - precoDoProduto;
 
-        const estoqueLocal = { ...estoque };
+        if (!estoque) {
+          estoque = {};
+        }
 
-        for (let cedula of cedulas) {          
-          let qtdDisponivel = estoqueLocal[cedula] || 0;
+        for (let cedula of cedulas) {
+          let qtdDisponivel = estoque[cedula] || 0;
+
           while (restante >= cedula && qtdDisponivel > 0) {
             restante -= cedula;
-            troco.push(cedula);
+            trocoProvisorio.push(cedula);
             qtdDisponivel--;
+            
+            cedulasUsadas[cedula] = (cedulasUsadas[cedula] || 0) + 1;
           }
         }
 
         if (restante > 0) {
           throw new Error("Não foi possível calcular o troco com o estoque disponível.");
+        
+        } else {
+          for (let cedula in cedulasUsadas) {
+            estoque[cedula] -= cedulasUsadas[cedula];
+          }
+          return trocoProvisorio;
         }
-
-        return troco;
       }
     </script>
 
