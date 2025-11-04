@@ -15,7 +15,7 @@
     <script src="https://code.jquery.com/qunit/qunit-1.18.0.js"></script>
 
     <script>
-      function calcularTroco(precoDoProduto, valorPago) {
+      function calcularTroco(precoDoProduto, valorPago, estoque) {
         const cedulas = [100, 50, 20, 10, 5, 2, 1];
         let troco = [];
         let restante = valorPago - precoDoProduto;
@@ -33,15 +33,15 @@
 
     <script>
       test('calcularTroco(1,1) deve retornar [] - Um array vazio', (assert) => {
-        const trocoCalculado = calcularTroco(1, 1) // Sem troco, apenas um array vazio
+        const trocoCalculado = calcularTroco(1, 1, {}) 
         const trocoEsperado = []
-        assert.deepEqual(trocoCalculado, trocoEsperado) // 'deepEqual' usado para comparar arrays, veja mais em https://api.qunitjs.com/assert/deepEqual/
+        assert.deepEqual(trocoCalculado, trocoEsperado)
       })
     </script>
 
     <script>
       test('calcularTroco(215, 300) deve retornar [50, 20, 10, 5]', (assert) => {
-        const trocoCalculado = calcularTroco(215, 300) // Esperado um array contendo [50, 20, 10, 5]
+        const trocoCalculado = calcularTroco(215, 300, {}) // Esperado um array contendo [50, 20, 10, 5]
         const trocoEsperado = [50, 20, 10, 5]
         assert.deepEqual(trocoCalculado, trocoEsperado)
       })
@@ -49,7 +49,7 @@
 
     <script>
       test('calcularTroco(486, 600) deve retornar [100, 10, 2, 2]', (assert) => {
-        const trocoCalculado = calcularTroco(486, 600)
+        const trocoCalculado = calcularTroco(486, 600, {})
         const trocoEsperado = [100, 10, 2, 2]
         assert.deepEqual(trocoCalculado, trocoEsperado)
       })
@@ -57,10 +57,23 @@
 
     <script>
       test('calcularTroco(12, 200) deve retornar [100, 50, 20, 10, 5, 2, 1]', (assert) => {
-        const trocoCalculado = calcularTroco(12, 200)
+        const trocoCalculado = calcularTroco(12, 200, {})
         const trocoEsperado = [100, 50, 20, 10, 5, 2, 1]
         assert.deepEqual(trocoCalculado, trocoEsperado)
       })
+    </script>
+
+    <script>
+      test('RED: Deve dar o troco R$ 80 como [20, 20, 20, 20] quando o estoque de R$ 50 for 0', (assert) => {        
+        const estoque = { 100: 2, 50: 0, 20: 5, 10: 10, 5: 10, 2: 10, 1: 10 };
+        const preco = 120;
+        const pago = 200;
+        
+        const trocoCalculado = calcularTroco(preco, pago, estoque);
+        const trocoEsperado = [20, 20, 20, 20];
+
+        assert.deepEqual(trocoCalculado, trocoEsperado, "Falha: O algoritmo antigo retornou [50, 20, 10] em vez de [20, 20, 20, 20]");
+      });
     </script>
 
   </body>
